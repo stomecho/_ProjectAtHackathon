@@ -1,14 +1,27 @@
-var bgX=0;
-function backgroundA(){
+var baX=0;
+var s=100;
+var bgT=0;
+function backgroundA(rate){
+    bgT++;
     background(0);
     noStroke();
-    for(var i=0;i<=height;i+=50)
+    for(var i=0;i<=height;i+=s)
     {
-        for(var j=0;j<3;j++)
-            fill(j*75,j*35,j*7);
-            rect(baX-j*50,i,50,50);
+        for(var j=0;j<20;j++){
+            fill(225-j*22.5,115-j*22.5,115-j*5);
+            rect(baX-j*s-i,i,s,s);
+        }
     }
-    if(baX>width)baX=0;
-    baX+=50;
+    for(var i=0;i<=height;i+=s)
+    {
+        for(var j=0;j<20;j++){
+            fill(225-j*22.5,115-j*22.5,115-j*5);
+            rect(baX+j*s-i,i,s,s);
+        }
+    }
+    if(bgT%4==0){
+        if(baX>width+s*20)baX=-s*20;
+        baX+=s;   
+    }
     
 }
