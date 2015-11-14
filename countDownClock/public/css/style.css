@@ -1,0 +1,29 @@
+body {
+    display: block;
+    text-align: center ;
+    -ms-user-select: none;
+    font: 20px/1.5 "微軟正黑體","Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #292929;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    position: fixed;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+
+#processing {
+}
+
+h1 {
+    font-size: 16px;
+}
+
+canvas {display:block;}    /* remove scrollbars */
+canvas:focus {outline:0;} /* remove blue outline around canvas */
