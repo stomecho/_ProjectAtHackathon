@@ -118,9 +118,9 @@ function defaultSong(){
     setNote(melodyLine,[0]);
     setNote(bassLine,  [0]);
     setNote(drumLine,  [0]);
-    soundFile.playLines[0]=melodyLine; 
-    soundFile.playLines[1]=bassLine; 
-    soundFile.playLines[2]=drumLine; 
+    soundFile.playLines[0]=melodyLine;
+    soundFile.playLines[1]=bassLine;
+    soundFile.playLines[2]=drumLine;
     //playSoundFile(soundFile);
     return soundFile;
 }
@@ -154,6 +154,7 @@ function setNote(playLine, noteIds){
         if(noteIds[i]!=0)
         notes[i] = new Note(noteTable[noteIds[i]],0.5 );
     }
+    return playLine;
 }
 
 //播放方法
