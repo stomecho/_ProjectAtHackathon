@@ -17,4 +17,5 @@ function mdraw(){
 function mouseClicked() {
 //    note.stop();
 //    note.start();
+    defaultSong();
 }
