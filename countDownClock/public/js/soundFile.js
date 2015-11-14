@@ -56,7 +56,7 @@ var noteTable = [
 369.99	, // F#4/Gb4 	 index=54
 392		, //G4			 index=55
 415.3	, // G#4/Ab4 	 index=56
-440		, //A4			 index=57
+440		, //A4			 index=57 
 466.16	, // A#4/Bb4 	 index=58
 493.88	, //B4			 index=59
 523.25	, //C5			 index=60
@@ -110,14 +110,19 @@ var noteTable = [
 ];
 
 function defaultSong(){
-    var soundFile = new SoundFile(480);
-    var melodyLine = new PlayLine('square');
-    var bassLine = new PlayLine('sinWave');
-    setNote(melodyLine,[76,76,0 ,76,0 ,72,76,0 ,79,0 ,0 ,0 ,67,0 ,0 ,0 ]);
-    setNote(bassLine,  [38,38,0 ,38,0 ,0 ,38,0 ,43,0 ,0 ,0 ,31,0 ,0 ,0 ]);
+    var soundFile = new SoundFile(300);
+    var melodyLine = new PlayLine('sine');
+    var bassLine = new PlayLine('square');
+    var drumLine = new PlayLine('triangle');
+    //                 [1x,oo,oo,oo,xx,oo,oo,oo,2x,oo,oo,oo,xx,oo,oo,oo,3x,oo,oo,oo,xx,oo,oo,oo,4x,oo,oo,oo,xx,oo,oo,oo]
+    setNote(melodyLine,[0]);
+    setNote(bassLine,  [0]);
+    setNote(drumLine,  [0]);
     soundFile.playLines[0]=melodyLine; 
     soundFile.playLines[1]=bassLine; 
-    playSoundFile(soundFile);
+    soundFile.playLines[2]=drumLine; 
+    //playSoundFile(soundFile);
+    return soundFile;
 }
 
 //撥放器群組 - 限制音符數量
@@ -147,7 +152,7 @@ function setNote(playLine, noteIds){
     var notes = playLine.notes;
     for(var i=0;i<lenOfNotes;i++){
         if(noteIds[i]!=0)
-        notes[i] = new Note(noteTable[noteIds[i]],0.8 );
+        notes[i] = new Note(noteTable[noteIds[i]],0.5 );
     }
 }
 
@@ -180,7 +185,6 @@ function playPlayLine(playLine, bpm){
 function playNote(note, type, start, end){
     var newNote = noteGroup[noteGroupPointer];
     newNote = new p5.Oscillator(note.freq , type);
-    console.log("playNote "+note.freq+" s= "+start);
     newNote.start(start);
     newNote.stop(start+end);
     noteGroupPointer=(noteGroupPointer+1)%maxNotes;
