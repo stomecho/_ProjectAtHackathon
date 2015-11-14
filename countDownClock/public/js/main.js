@@ -14,8 +14,6 @@ function mdraw(){
     note.freq(mouseY/height*800);
 }
 
-
-
 function mouseClicked() {
     note.stop();
     note.start();
