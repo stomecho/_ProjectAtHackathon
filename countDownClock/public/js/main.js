@@ -33,6 +33,7 @@ function keyPressed(){
         if(!isMaster)
         uploadFile(playSong());
         else{
+            if(isMaster)startTime=millis();
             playSoundFile(mainSong);
         }
     }

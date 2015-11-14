@@ -15,7 +15,9 @@ function drawPcEditor(){
     }else{
         for(var i=0;i<noteLen;i++){
             fill(255);
-            if(i==time)fill(0,255,0);
+            if(i<=time){
+                fill(255,max(0,i+100-time)+125);
+            }else fill(255,100);
             if(noteHight[i]!=null){
                 
                 rect(i*len,noteHight[i]*hi,len,hi);
@@ -38,7 +40,7 @@ function addNoteHight(x,y){
 
 function playSong(){
     var soundFile = new SoundFile(300);
-    var melodyLine = new PlayLine(types[Math.floor(random(types.length))]);
+    var melodyLine = new PlayLine(types[myId%types.length]);
     var notes = [];
     for(var i=0;i<noteLen;i++){
         if(noteHight[i]!=null){
@@ -47,8 +49,7 @@ function playSong(){
     }
     setNote(melodyLine,notes);
     soundFile.playLines[0]=melodyLine; 
-    if(isMaster)
-    startTime=millis();
+    
     //playSoundFile(soundFile);
     return soundFile;
 }
@@ -57,12 +58,20 @@ function drawSoundFile(file){
     
     var len = width/noteLen;
     var hi  = height/1000;
-    var time = Math.floor((millis()-startTime)*300/1000/60);
+    var time = (millis()-startTime)*300/1000/60;
     for(var l=0;l<file.playLines.length;l++){
         var line = file.playLines[l].notes;
         for(var i=0;i<noteLen;i++){
-            fill(colors[l%colors.length]);
-            if(i==time)fill(0,255,0);
+            var c = colors[l%colors.length];
+            var r = hexToR(c);
+            var g = hexToG(c);
+            var b = hexToB(c);
+            
+            
+            if(i<=time){
+                fill(r,g,b,max(0,i+100-time)+125);
+            }else fill(r,g,b,100);
+            
             if(line[i]!=null){
                 rect(i*len,line[i].freq*hi,len,10);
             }
@@ -70,3 +79,7 @@ function drawSoundFile(file){
     }
 }
 
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
