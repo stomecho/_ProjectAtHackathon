@@ -18,7 +18,7 @@ io.on('connection', function (socket) {
     socket.on('join', function (data) {
         console.log('new id '+nowId);
         socket.emit('join', {id: nowId});
-        nowId++;
+        nowId=(nowId+1)%8;
     });
               
     socket.on('upload', function (data) {

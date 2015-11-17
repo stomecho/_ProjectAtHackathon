@@ -27,13 +27,13 @@ socket.on('update', function (data) {
             if(mainSong.playLines[i]==undefined) mainSong.playLines[i] = setNote(new PlayLine('sine'),[0]);
         }
         mainSong.playLines[data.id] = data.playLine;
-        console.log(data.playLine);
-        console.log(mainSong);
+        //console.log(data.playLine);
+        //console.log(mainSong);
     }
 });
 
 socket.on('join', function(data){
     myId = data.id;
-    console.log('join');
-    alert('your id is '+myId);
+    //console.log('join');
+    //alert('your id is '+myId);
 });

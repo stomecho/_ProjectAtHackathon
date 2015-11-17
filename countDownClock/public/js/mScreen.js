@@ -13,12 +13,12 @@ function checkMobile(){
         isMobile = true;
     }
 }
-
-function windowResized() {
-    if (fullScreen()) {
-        alert('full screened');
-        resizeCanvas(displayWidth,displayHeight);
-        if(isMobile) resizeCanvas(innerWidth,innerHeight);
-    } else resizeCanvas(innerWidth,innerHeight);
-    background(0);
-}
+//
+//function windowResized() {
+//    if (fullScreen()) {
+//        alert('full screened');
+//        resizeCanvas(displayWidth,displayHeight);
+//        if(isMobile) resizeCanvas(innerWidth,innerHeight);
+//    } else resizeCanvas(innerWidth,innerHeight);
+//    background(0);
+//}

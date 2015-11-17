@@ -109,6 +109,27 @@ var noteTable = [
 7902.13	, //B8			 index=107
 ];
 
+var drumPad = [];
+
+function dpreload() {
+    drumPad[0] = loadSound('js/drumPadFiles/Kick Bitkits 01 1.wav');
+    drumPad[1] = loadSound('js/drumPadFiles/Kick Bitkits 01 2.wav');
+    drumPad[2] = loadSound('js/drumPadFiles/Kick Bitkits 01 3.wav');
+    drumPad[3] = loadSound('js/drumPadFiles/Kick Bitkits 02 1.wav');
+    drumPad[4] = loadSound('js/drumPadFiles/Kick Bitkits 04 2.wav');
+    drumPad[5] = loadSound('js/drumPadFiles/Kick Bitkits 05 2.wav');
+
+    drumPad[6] = loadSound('js/drumPadFiles/ClosedHH Bitkits 10.wav');
+    drumPad[7] = loadSound('js/drumPadFiles/OpenHH Bitkits 05.wav');
+
+    drumPad[8] = loadSound('js/drumPadFiles/Snare Bitkits 01.wav');
+    drumPad[9] = loadSound('js/drumPadFiles/Snare Bitkits 04 1.wav');
+    drumPad[10] = loadSound('js/drumPadFiles/Snare Bitkits 08.wav');
+
+    drumPad[11] = loadSound('js/drumPadFiles/Tom Bitkits 01 1.wav');
+}
+
+
 function defaultSong(){
     var soundFile = new SoundFile(300);
     var melodyLine = new PlayLine('sine');
@@ -141,7 +162,8 @@ function PlayLine(type){
     this.notes = [];
 }
 
-function Note(freq, len){
+function Note(freq, len, id){
+    this.id=id;
     this.freq=freq;
     this.len=len;
 }
@@ -152,14 +174,14 @@ function setNote(playLine, noteIds){
     var notes = playLine.notes;
     for(var i=0;i<lenOfNotes;i++){
         if(noteIds[i]!=0)
-        notes[i] = new Note(noteTable[noteIds[i]],0.5 );
+        notes[i] = new Note(noteTable[noteIds[i]],0.7,noteIds[i]);
     }
     return playLine;
 }
 
 //播放方法
 function playSoundFile(soundFile){
-    println('playFile');
+    //println('playFile');
     var playLines = soundFile.playLines;
     var amountOfPlayLines = playLines.length;
     for(var i = 0; i<amountOfPlayLines;i++){
@@ -175,7 +197,7 @@ function playPlayLine(playLine, bpm){
     var lenOfNote = 60/bpm;
     var amountOfNotes = notes.length;
     
-    println('playLine '+amountOfNotes);
+    //println('playLine '+amountOfNotes);
     for(var i = 0;i<amountOfNotes;i++){
         var note = notes[i];
         if(note!=null)
@@ -184,9 +206,24 @@ function playPlayLine(playLine, bpm){
 }
 
 function playNote(note, type, start, end){
-    var newNote = noteGroup[noteGroupPointer];
-    newNote = new p5.Oscillator(note.freq , type);
-    newNote.start(start);
-    newNote.stop(start+end);
-    noteGroupPointer=(noteGroupPointer+1)%maxNotes;
+    if(type=='drum'){
+        println(note.id);
+        if(note.id>=40)
+        var druma = drumPad[note.id-40];
+        if(druma!=null) druma.play(start);        
+    }else{
+        var newNote = noteGroup[noteGroupPointer];
+        if(newNote==null)
+        newNote = new p5.Oscillator(note.freq , type);
+        else{
+            newNote.setFreq(note.freq);
+            newNote.setType(type);
+        }
+        if(type=='square') newNote.amp(0.15);
+        else newNote.amp(0.5);
+        
+        newNote.start(start);
+        newNote.stop(start+end);
+        noteGroupPointer=(noteGroupPointer+1)%maxNotes;
+    }
 }
